@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>POSTFIRE | CARTO</title>
+    <meta name="viewport" content="initial-scale=1.0">
+    <meta charset="utf-8">
+	<script
+  src="https://code.jquery.com/jquery-2.2.4.min.js"
+  integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+  crossorigin="anonymous"></script>
+    <!-- Include Leaflet -->
+    <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"></script>
+    <link href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css" rel="stylesheet">
+	<!-- Include Jquery -->
+	
+    <!-- Include CARTO.js -->
+    <script src="https://libs.cartocdn.com/cartodb.js/v3/3.15/cartodb.js"></script>
+    <!-- Fonts -->
+	<link rel="stylesheet" href="https://libs.cartocdn.com/cartodb.js/v3/3.15/themes/css/cartodb.css" />
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" type="text/css">
+    <style>
+      html, body{
+        height : 100%;
+        padding: 0;
+        margin: 0;
+		}
+	   #map{
+	    width: 70%;
+		height: 100%;
+	   }
+	   #legend{
+			
+			
+	   }
+	   .character{
+			width: 30%
+	   }
+	  .map_container{
+		display:flex;
+		height: 100%;
+	  }
+	  .container>div{
+		flex:1;
+	  }
+	
+	  .options.svelte-100ox14{position:absolute; top:30px; left: 30px;font-size:0.8rem;padding:0.5rem;flex-wrap:wrap}.options-simulation.svelte-100ox14,.options-population.svelte-100ox14,.options-scenario.svelte-100ox14,.options-boundaries.svelte-100ox14{padding:0.5rem 1rem;display:flex;flex-direction:column}.options-simulation.svelte-100ox14>div.svelte-100ox14{display:flex;flex-direction:row;align-items:center;z-index:4}.title.svelte-100ox14{text-transform:uppercase;padding-right:20px}.custom-select{font-size:0.8rem}.custom-select-wrapper label{display:none}.custom-control-label{line-height:2}
+    </style>
+  </head>
+  <body>
+	<div class='map_container'>
+	  <div id="map"></div>
+		<div class='character'>
+			<div class='buttons'>
+				<button class = 'reset'> reset</button>
+			</div>
+			<div class = 'options'>
+				<div class='options-scenario'><span class="title">RCP SCENARIO:</span> 
+				<div>
+					
+					<div class="custom-control custom-radio custom-control-inline">
+						<input id="scenario_0" type="radio" value="[object Object]" name="Scenario" class="custom-control-input"> 
+							<label class="custom-control-label" for="scenario_0">Medium (RCP 4.5)
+							</label>
+					</div>
+					<div class="custom-control custom-radio custom-control-inline">
+						<input id="scenario_1" type="radio" value="[object Object]" name="Scenario" class="custom-control-input"> 
+							<label class="custom-control-label" for="scenario_1">High (RCP 8.5)
+							</label>
+					</div>
+					<div class="custom-control custom-radio custom-control-inline">
+						<input id="scenario_2" type="radio" value="[object Object]" name="Scenario" class="custom-control-input"> 
+							<label class="custom-control-label" for="scenario_2">Current
+							</label>
+					</div>
+				</div>
+				</div>
+				<div class='options-GCM'><span class="title">SELECT MODEL</span> 
+				<div>
+					<div class="custom-control custom-radio custom-control-inline">
+						<input id="scenario_0" type="radio" value="[object Object]" name="Scenario" class="custom-control-input"> 
+							<label class="custom-control-label" for="scenario_0">Medium (RCP 4.5)
+							</label>
+					</div>
+					<div class="custom-control custom-radio custom-control-inline">
+						<input id="scenario_1" type="radio" value="[object Object]" name="Scenario" class="custom-control-input"> 
+							<label class="custom-control-label" for="scenario_1">High (RCP 8.5)
+							</label>
+					</div>
+				</div>
+			</div>
+			<!--<div class='options'>
+			<div class="options-scenario svelte-100ox14"><span class="title svelte-100ox14">RCP Scenario:</span> 
+				<div>
+					<div class="custom-control custom-radio custom-control-inline">
+						<input id="scenario_0" type="radio" value="[object Object]" name="Scenario" class="custom-control-input"> 
+							<label class="custom-control-label" for="scenario_0">Medium (RCP 4.5)
+							</label>
+					</div>
+					<div class="custom-control custom-radio custom-control-inline">
+						<input id="scenario_1" type="radio" value="[object Object]" name="Scenario" class="custom-control-input"> 
+							<label class="custom-control-label" for="scenario_1">High (RCP 8.5)
+							</label>
+					</div>
+				</div>
+			</div>
+			</div>-->
+			
+			
+			<div class="options-models"><span class="title svelte-129hrsg">Select Model</span> <div id="model" class="custom-select-wrapper svelte-cuqq9b"><label for="model-select-input"></label> <div class="custom-select svelte-cuqq9b" id="modelCustomSelect" role="combobox" aria-haspopup="listbox" aria-owns="custom-select-list" aria-expanded="true" aria-disabled="false"><span id="model-select-input" class="select-css" aria-autocomplete="both" aria-controls="model-select-list">CanESM2 (Average)</span></div> <ul class="custom-select-options svelte-14bqph8" id="month-select-list" role="listbox"><li role="option" tabindex="-1" class="svelte-1yi50oi">CanESM2 (Average)</li><li role="option" tabindex="-1" class="svelte-1yi50oi">CNRM-CM5 (Cooler/Wetter)</li><li role="option" tabindex="-1" class="svelte-1yi50oi">HadGEM2-ES (Warm/Drier)</li><li role="option" tabindex="-1" class="svelte-1yi50oi">MIROC5 (Complement)</li></ul></div></div>
+			
+			
+			
+			<div id = 'legend'>
+				<img src='legend.PNG' width="240" height="144">
+			</div>
+		</DIV>
+	</div>
+	  <script>
+		var lay_variable;
+		$(document).ready(function () {
+			cartodb.createVis('map', "https://ruili11.carto.com/api/v2/viz/b3fdf47c-3122-4c63-9fac-ef018636b508/viz.json")
+			.done(function (vis,layers){
+				lay_variable = layers[1].getSubLayer(0);
+			});
+
+			$('.reset').click(function(){
+				lay_variable.setCartoCSS('#layer {marker-width: 7;marker-fill: ramp([objectid], (#fbe6c5, #f2a28a, #dc7176, #b24b65, #70284a), quantiles);marker-fill-opacity: 1;marker-allow-overlap: true;marker-line-width: 1;marker-line-color: #FFFFFF;marker-line-opacity: 1;}')
+			});
+		});
+	  </script>
+  </body>
+</html>
+
